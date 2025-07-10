@@ -33,7 +33,7 @@ interface TronInterface
      * @param string|null $address
      * @return array
      */
-    public function getBalance(?string $address = null): array;
+    public function getBalance(?string $address = null): float;
 
     /**
      * Query transaction based on id
