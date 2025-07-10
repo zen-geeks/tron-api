@@ -93,7 +93,7 @@ class BigInteger
      * @param string $value The value to compare.
      * @return int Returns -1 is the number is less than this number. 0 if equal and 1 when greater.
      */
-    public function cmp($value): int
+    public function cmp(string $value): int
     {
         $value = $this->initValue($value);
 

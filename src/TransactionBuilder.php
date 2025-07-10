@@ -37,7 +37,7 @@ class TransactionBuilder
      * @return array
      * @throws TronException
      */
-    public function sendTrx(string $to, float $amount, string $from = null, string $message = null)
+    public function sendTrx(string $to, float $amount, ?string $from = null, ?string $message = null): array
     {
         if ($amount < 0) {
             throw new TronException('Invalid amount provided');
@@ -77,7 +77,7 @@ class TransactionBuilder
      * @return array
      * @throws TronException
      */
-    public function sendToken(string $to, int $amount, string $tokenID, string $from)
+    public function sendToken(string $to, int $amount, string $tokenID, string $from): array
     {
         if (!is_integer($amount) or $amount <= 0) {
             throw new TronException('Invalid amount provided');
@@ -114,7 +114,7 @@ class TransactionBuilder
      * @return array
      * @throws TronException
      */
-    public function purchaseToken($issuerAddress, $tokenID, $amount, $buyer)
+    public function purchaseToken($issuerAddress, $tokenID, $amount, $buyer): array
     {
         if (!is_string($tokenID)) {
             throw new TronException('Invalid token ID provided');
@@ -145,7 +145,7 @@ class TransactionBuilder
      * @return array
      * @throws TronException
      */
-    public function createToken($options = [], $issuerAddress = null)
+    public function createToken(array $options = [], $issuerAddress = null): array
     {
         $startDate = new \DateTime();
         $startTimeStamp = $startDate->getTimestamp() * 1000;
@@ -258,7 +258,7 @@ class TransactionBuilder
      * @return array
      * @throws TronException
      */
-    public function freezeBalance(float $amount = 0, int $duration = 3, string $resource = 'BANDWIDTH', string $address = null)
+    public function freezeBalance(float $amount = 0, int $duration = 3, string $resource = 'BANDWIDTH', ?string $address = null): array
     {
         if(empty($address))
             throw new TronException('Address not specified');
@@ -288,11 +288,11 @@ class TransactionBuilder
      * Unfreezing will remove bandwidth and TRON Power.
      *
      * @param string $resource
-     * @param string $owner_address
+     * @param string|null $owner_address
      * @return array
      * @throws TronException
      */
-    public function unfreezeBalance(string $resource = 'BANDWIDTH', string $owner_address = null)
+    public function unfreezeBalance(string $resource = 'BANDWIDTH', ?string $owner_address = null): array
     {
         if(is_null($owner_address)) {
             throw new TronException('Owner Address not specified');
@@ -311,11 +311,11 @@ class TransactionBuilder
     /**
      * Withdraw Super Representative rewards, useable every 24 hours.
      *
-     * @param string $owner_address
+     * @param string|null $owner_address
      * @return array
      * @throws TronException
      */
-    public function withdrawBlockRewards($owner_address = null)
+    public function withdrawBlockRewards(?string $owner_address = null): array
     {
         $withdraw =  $this->tron->getManager()->request('wallet/withdrawbalance', [
             'owner_address' =>  $this->tron->address2HexString($owner_address)
@@ -338,7 +338,7 @@ class TransactionBuilder
      * @return array
      * @throws TronException
      */
-    public function updateToken(string $description, string $url, int $freeBandwidth = 0, int $freeBandwidthLimit = 0, $address = null)
+    public function updateToken(string $description, string $url, int $freeBandwidth = 0, int $freeBandwidthLimit = 0, $address = null): array
     {
         if(is_null($address)) {
             throw new TronException('Owner Address not specified');
@@ -370,7 +370,7 @@ class TransactionBuilder
      * @return array
      * @throws TronException
      */
-    public function updateEnergyLimit(string $contractAddress, int $originEnergyLimit, string $ownerAddress)
+    public function updateEnergyLimit(string $contractAddress, int $originEnergyLimit, string $ownerAddress): array
     {
         $contractAddress = $this->tron->address2HexString($contractAddress);
         $ownerAddress = $this->tron->address2HexString($ownerAddress);
@@ -395,7 +395,7 @@ class TransactionBuilder
      * @return array
      * @throws TronException
      */
-    public function updateSetting(string $contractAddress, int $userFeePercentage, string $ownerAddress)
+    public function updateSetting(string $contractAddress, int $userFeePercentage, string $ownerAddress): array
     {
         $contractAddress = $this->tron->address2HexString($contractAddress);
         $ownerAddress = $this->tron->address2HexString($ownerAddress);
@@ -416,7 +416,7 @@ class TransactionBuilder
  *
  * @return array
  */
-public function contractbalance($adres)
+public function contractbalance(string $address): array
 {
 	$trc20=array();
   $abi=json_decode('{"entrys": [{"constant": true,"name": "name","outputs": [{"type": "string"}],"type": "Function","stateMutability": "View"},{"name": "approve","inputs": [{"name": "_spender","type": "address"},{"name": "_value","type": "uint256"}],"outputs": [{"type": "bool"}],"type": "Function","stateMutability": "Nonpayable"},{"name": "setCanApproveCall","inputs": [{"name": "_val","type": "bool"}],"type": "Function","stateMutability": "Nonpayable"},{"constant": true,"name": "totalSupply","outputs": [{"type": "uint256"}],"type": "Function","stateMutability": "View"},{"name": "transferFrom","inputs": [{"name": "_from","type": "address"},{"name": "_to","type": "address"},{"name": "_value","type": "uint256"}],"outputs": [{"type": "bool"}],"type": "Function","stateMutability": "Nonpayable"},{"constant": true,"name": "decimals","outputs": [{"type": "uint8"}],"type": "Function","stateMutability": "View"},{"name": "setCanBurn","inputs": [{"name": "_val","type": "bool"}],"type": "Function","stateMutability": "Nonpayable"},{"name": "burn","inputs": [{"name": "_value","type": "uint256"}],"outputs": [{"name": "success","type": "bool"}],"type": "Function","stateMutability": "Nonpayable"},{"constant": true,"name": "balanceOf","inputs": [{"name": "_owner","type": "address"}],"outputs": [{"type": "uint256"}],"type": "Function","stateMutability": "View"},{"constant": true,"name": "symbol","outputs": [{"type": "string"}],"type": "Function","stateMutability": "View"},{"name": "transfer","inputs": [{"name": "_to","type": "address"},{"name": "_value","type": "uint256"}],"outputs": [{"type": "bool"}],"type": "Function","stateMutability": "Nonpayable"},{"constant": true,"name": "canBurn","outputs": [{"type": "bool"}],"type": "Function","stateMutability": "View"},{"name": "approveAndCall","inputs": [{"name": "_spender","type": "address"},{"name": "_value","type": "uint256"},{"name": "_extraData","type": "bytes"}],"outputs": [{"name": "success","type": "bool"}],"type": "Function","stateMutability": "Nonpayable"},{"constant": true,"name": "allowance","inputs": [{"name": "_owner","type": "address"},{"name": "_spender","type": "address"}],"outputs": [{"type": "uint256"}],"type": "Function","stateMutability": "View"},{"name": "transferOwnership","inputs": [{"name": "_newOwner","type": "address"}],"type": "Function","stateMutability": "Nonpayable"},{"constant": true,"name": "canApproveCall","outputs": [{"type": "bool"}],"type": "Function","stateMutability": "View"},{"type": "Constructor","stateMutability": "Nonpayable"},{"name": "Transfer","inputs": [{"indexed": true,"name": "_from","type": "address"},{"indexed": true,"name": "_to","type": "address"},{"name": "_value","type": "uint256"}],"type": "Event"},{"name": "Approval","inputs": [{"indexed": true,"name": "_owner","type": "address"},{"indexed": true,"name": "_spender","type": "address"},{"name": "_value","type": "uint256"}],"type": "Event"},{"name": "Burn","inputs": [{"indexed": true,"name": "_from","type": "address"},{"name": "_value","type": "uint256"}],"type": "Event"}]}',true);
@@ -426,14 +426,14 @@ public function contractbalance($adres)
   foreach($jsonData["trc20_tokens"] as $key =>$item)
   {
 	  $owner=$item["contract_address"];
-	  $params=array("0"=>$this->tron->toHex($adres));
+	  $params=array("0"=>$this->tron->toHex($address));
   	$result = $this->tron->getTransactionBuilder()->triggerSmartContract(
   	$abi['entrys'],
 	  $this->tron->toHex($owner),
   	$func,
 	  $params,
   	$feeLimit,
-  	$this->tron->toHex($adres),
+  	$this->tron->toHex($address),
   	0,
   	0);
     $balance_hex=$result["0"];
@@ -459,7 +459,7 @@ return $trc20;
      * @param string $contract $tron->toHex('Txxxxx');
      * @param string $function
      * @param array $params array("0"=>$value);
-     * @param integer $feeLimit
+     * @param int $feeLimit
      * @param string $address $tron->toHex('Txxxxx');
      * @param int $callValue
      * @param int $bandwidthLimit
@@ -467,14 +467,14 @@ return $trc20;
      * @return mixed
      * @throws TronException
      */
-    public function triggerSmartContract($abi,
-                                         $contract,
-                                         $function,
-                                         $params,
-                                         $feeLimit,
-                                         $address,
-                                         $callValue = 0,
-                                         $bandwidthLimit = 0)
+    public function triggerSmartContract(mixed  $abi,
+                                         string $contract,
+                                         string $function,
+                                         array  $params,
+                                         int    $feeLimit,
+                                         string $address,
+                                         int    $callValue = 0,
+                                         int    $bandwidthLimit = 0): mixed
     {
         $func_abi = [];
         foreach($abi as $key =>$item) {
@@ -551,11 +551,11 @@ return $trc20;
      * @return mixed
      * @throws TronException
      */
-    public function triggerConstantContract($abi,
-                                            $contract,
-                                            $function,
-                                            $params = [],
-                                            $address = '410000000000000000000000000000000000000000')
+    public function triggerConstantContract(mixed  $abi,
+                                            string $contract,
+                                            string $function,
+                                            array  $params = [],
+                                            string $address = '410000000000000000000000000000000000000000'): mixed
     {
         $func_abi = [];
         foreach($abi as $key =>$item) {

@@ -11,7 +11,7 @@ class Base58
      *
      * @return string
      */
-    public static function encode($num, $length = 58): string
+    public static function encode($num, int $length = 58): string
     {
         return Crypto::dec2base($num, $length, '123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz');
     }

@@ -11,7 +11,7 @@ class Base58Check
      * @param bool $compressed
      * @return string
      */
-    public static function encode(string $string, int $prefix = 128, bool $compressed = true)
+    public static function encode(string $string, int $prefix = 128, bool $compressed = true): string
     {
         $string = hex2bin($string);
 
@@ -45,7 +45,7 @@ class Base58Check
      * @param bool $removeCompression
      * @return bool|string
      */
-    public static function decode(string $string, int $removeLeadingBytes = 1, int $removeTrailingBytes = 4, bool $removeCompression = true)
+    public static function decode(string $string, int $removeLeadingBytes = 1, int $removeTrailingBytes = 4, bool $removeCompression = true): bool|string
     {
         $string = bin2hex(Crypto::bc2bin(Base58::decode($string)));
 

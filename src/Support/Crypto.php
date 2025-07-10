@@ -3,7 +3,7 @@ namespace IEXBase\TronAPI\Support;
 
 class Crypto
 {
-    public static function bc2bin($num)
+    public static function bc2bin($num): ?string
     {
         return self::dec2base($num, 256);
     }
@@ -57,7 +57,7 @@ class Crypto
         }
     }
 
-    public static function digits($base)
+    public static function digits($base): string
     {
         if ($base > 64) {
             $digits = "";
@@ -72,7 +72,7 @@ class Crypto
         return (string)$digits;
     }
 
-    public static function bin2bc($num)
+    public static function bin2bc($num): ?string
     {
         return self::base2dec($num, 256);
     }

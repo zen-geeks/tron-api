@@ -32,7 +32,7 @@ class Utils
      * @param string
      * @return bool
      */
-    public static function isZeroPrefixed($value)
+    public static function isZeroPrefixed($value): bool
     {
         if (!is_string($value)) {
             throw new InvalidArgumentException('The value to isZeroPrefixed function must be string.');
@@ -46,7 +46,7 @@ class Utils
      * @param string $value
      * @return string
      */
-    public static function stripZero($value)
+    public static function stripZero(string $value): string
     {
         if (self::isZeroPrefixed($value)) {
             $count = 1;
@@ -61,7 +61,7 @@ class Utils
      * @param string
      * @return bool
      */
-    public static function isNegative($value)
+    public static function isNegative($value): bool
     {
         if (!is_string($value)) {
             throw new InvalidArgumentException('The value to isNegative function must be string.');
@@ -85,7 +85,7 @@ class Utils
      * @param string
      * @return string
      */
-    public static function hexToBin($value)
+    public static function hexToBin($value): string
     {
         if (!is_string($value)) {
             throw new InvalidArgumentException('The value to hexToBin function must be string.');
@@ -102,7 +102,7 @@ class Utils
      * @return bool
      * @throws Exception
      */
-    public static function validate($address)
+    public static function validate($address): bool
     {
         $decoded = Base58::decode($address);
 
@@ -118,7 +118,7 @@ class Utils
     /**
      * @throws Exception
      */
-    public static function decodeBase58($input)
+    public static function decodeBase58($input): string
     {
         $alphabet = "123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz";
 
@@ -151,7 +151,8 @@ class Utils
      *
      * @throws Exception
      */
-    public static function pubKeyToAddress($pubkey) {
+    public static function pubKeyToAddress($pubkey): string
+    {
         return '41'. substr(Keccak::hash(substr(hex2bin($pubkey), 1), 256), 24);
     }
 
@@ -164,7 +165,7 @@ class Utils
      * @return bool
      *   TRUE if string has "0x" prefix or FALSE.
      */
-    public static function hasHexPrefix($str)
+    public static function hasHexPrefix(string $str): bool
     {
         return substr($str, 0, 2) === '0x';
     }
@@ -175,7 +176,7 @@ class Utils
      * @param string $str
      * @return string
      */
-    public static function removeHexPrefix($str)
+    public static function removeHexPrefix(string $str): string
     {
         if (!self::hasHexPrefix($str)) {
             return $str;

@@ -3,6 +3,7 @@ namespace IEXBase\TronAPI\Concerns;
 
 
 use IEXBase\TronAPI\Exception\ErrorException;
+use IEXBase\TronAPI\Exception\TronException;
 
 trait ManagesUniversal
 {
@@ -22,9 +23,9 @@ trait ManagesUniversal
      * @param array $accounts
      * @param bool $isValid
      * @return array
-     * @throws ErrorException
+     * @throws ErrorException|TronException
      */
-    public function balances(array $accounts, $isValid = false): array
+    public function balances(array $accounts, bool $isValid = false): array
     {
         if(!is_array($accounts)) {
             throw new ErrorException('Data must be an array');
@@ -52,14 +53,14 @@ trait ManagesUniversal
     /**
      * We send funds to several addresses at once.
      *
-     * @param string $from
+     * @param string|null $from
      * @param array $to
      * @param null $private_key
      * @param bool $isValid
      * @return array
      * @throws ErrorException
      */
-    public function sendOneToMany(array $to, $private_key = null, bool $isValid = false, string $from = null): array
+    public function sendOneToMany(array $to, $private_key = null, bool $isValid = false, ?string $from = null): array
     {
         if(!is_null($private_key)) {
             $this->privateKey = $private_key;
