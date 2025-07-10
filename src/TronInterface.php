@@ -120,9 +120,9 @@ interface TronInterface
     /**
      * Generate new address
      *
-     * @return array
+     * @return TronAddress
      */
-    public function generateAddress(): array;
+    public function generateAddress(): TronAddress;
 
     /**
      * Check the address before converting to Hex
