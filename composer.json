@@ -13,7 +13,7 @@
     "require": {
         "php": "^8.3",
         "guzzlehttp/guzzle": "^7.9",
-        "web3p/web3.php": "^0.3",
+        "zen-geeks/web3.php": "^0.4",
         "kornrunner/secp256k1": "^0.3",
         "simplito/elliptic-php": "^1.0",
         "ext-json": "*",
